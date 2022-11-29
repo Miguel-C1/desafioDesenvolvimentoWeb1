@@ -24,15 +24,16 @@
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
         </section>
         <hr>
-        <form action="">
+        <form action="/gravarContato" method="POST">
         Seu Email: <br>
         <input type="text" id="txtemail" name="email"> <br>
         Assunto: <br>
-        <input type="text" id="txtassunto" name="descricao"> <br>
+        <input type="text" id="txtassunto" name="assunto"> <br>
         Descrição: <br>
         <textarea name="descricao" id="txtdescricao" cols="19" rows="2"></textarea> <br>
-        <input type="submit" value="">
+        <input type="submit" value="Enviar">
         </form>
+        <span>{{ mensagem }}</span>
         <footer class="rodape">
             Todos os direitos reservados
         </footer>
