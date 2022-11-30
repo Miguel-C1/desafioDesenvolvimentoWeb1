@@ -7,13 +7,13 @@ import funcs
 app = Flask(__name__)
 app.secret_key = 'super secret key'
 # Conexão ao banco de dados
-app.config['MYSQL_HOST'] = '127.0.0.1'
-app.config['MYSQL_PORT'] = '3306' #Caso a porta seja a padrão, comentar linha.
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_PORT'] = 3306 #Caso a porta seja a padrão, comentar linha.
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'fatec'
+app.config['MYSQL_PASSWORD'] = 'mcs2809'
 app.config['MYSQL_DB'] = 'desafioweb'
 
-
+mysql = MySQL(app)
 
 @app.route("/") 
 def home(): 
@@ -33,10 +33,16 @@ def gravarContato():
         descricao = request.form['descricao']
         assunto = request.form['assunto']
         email = request.form['email']
-        funcs.cadastrarContato(email=email, descricao=descricao, assunto=assunto)
+        cadastrarContato(email=email, descricao=descricao, assunto=assunto)
         return contato(mensagem='Cadastrado com sucesso!')
 
- 
+def cadastrarContato(email,assunto,descricao):
+    cursor = mysql.connection.cursor()
+    textoSQL = f"INSERT INTO contato(email, descricao, assunto) VALUES('{email}','{assunto}','{descricao}')"
+    cursor.execute(textoSQL)
+    mysql.connection.commit()
+    cursor.close()
+
 
 if __name__ == "__main__":
     app.run(debug=True)
